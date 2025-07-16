@@ -1,0 +1,58 @@
+from cryptography.fernet import Fernet
+
+# --- Generate Key and Save It ---
+def generate_key():
+    key = Fernet.generate_key()
+    with open("secret.key", "wb") as key_file:
+        key_file.write(key)
+    print("[+] Key generated and saved as secret.key")
+
+# --- Load the Key from File ---
+def load_key():
+    return open("secret.key", "rb").read()
+
+# --- Encrypt Message ---
+def encrypt_message(message):
+    key = load_key()
+    fernet = Fernet(key)
+    encrypted = fernet.encrypt(message.encode())
+    return encrypted
+
+# --- Decrypt Message ---
+def decrypt_message(encrypted_message):
+    key = load_key()
+    fernet = Fernet(key)
+    decrypted = fernet.decrypt(encrypted_message).decode()
+    return decrypted
+
+# --- Main Menu ---
+def main():
+    while True:
+        print("\n--- Advanced Encryption Tool ---")
+        print("1. Generate New Key")
+        print("2. Encrypt Message")
+        print("3. Decrypt Message")
+        print("4. Exit")
+
+        choice = input("Choose an option: ")
+
+        if choice == '1':
+            generate_key()
+        elif choice == '2':
+            msg = input("Enter message to encrypt: ")
+            encrypted = encrypt_message(msg)
+            print(f"[+] Encrypted: {encrypted.decode()}")
+        elif choice == '3':
+            enc_msg = input("Enter encrypted message: ").encode()
+            try:
+                decrypted = decrypt_message(enc_msg)
+                print(f"[+] Decrypted: {decrypted}")
+            except:
+                print("[-] Error: Invalid key or message")
+        elif choice == '4':
+            break
+        else:
+            print("Invalid choice")
+
+if __name__ == "__main__":
+    main()
