@@ -188,7 +188,7 @@ def main():
 if __name__ == "__main__":
     main()
 
-
-
+OUTPUT
+<img width="627" height="596" alt="Image" src="https://github.com/user-attachments/assets/77d33012-1069-4d4c-8466-1bf1d2bef167" />
 
 
